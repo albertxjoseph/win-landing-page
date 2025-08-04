@@ -1,0 +1,149 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>WIN - Motivation App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #fff;
+      color: #000;
+      line-height: 1.6;
+    }
+    header {
+      text-align: center;
+      padding: 3rem 1rem 2rem;
+    }
+    header h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+    header p {
+      font-size: 1.25rem;
+      max-width: 700px;
+      margin: auto;
+      margin-bottom: 1rem;
+    }
+    ul.features {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      color: #555;
+      font-size: 0.95rem;
+    }
+    section {
+      padding: 2rem 1rem;
+      text-align: center;
+    }
+    .mockups {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      max-width: 1000px;
+      margin: auto;
+    }
+    .mockup-tile {
+      background: #f2f2f2;
+      padding: 1rem;
+      border-radius: 0.75rem;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    }
+    .mockup-tile img {
+      width: 100%;
+      height: auto;
+      border-radius: 0.5rem;
+    }
+    form {
+      background: #f7f7f7;
+      max-width: 400px;
+      margin: 2rem auto;
+      padding: 1.5rem;
+      border-radius: 0.75rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    form input {
+      width: 100%;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #ccc;
+    }
+    form button {
+      width: 100%;
+      padding: 0.75rem;
+      background: black;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+    }
+    footer {
+      text-align: center;
+      font-size: 0.85rem;
+      color: #888;
+      padding: 2rem 1rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>WIN</h1>
+    <p>Not everyone gets in. But those who do, go further.</p>
+    <ul class="features">
+      <li>✓ Daily motivational videos</li>
+      <li>✓ Swipe to match with mentors</li>
+      <li>✓ Referral-only access</li>
+    </ul>
+  </header>
+
+  <section>
+    <h2>What the App Looks Like</h2>
+    <div class="mockups">
+      <div class="mockup-tile">
+        <h3>Video Feed</h3>
+        <p>Motivation personalized to your goals</p>
+        <img src="video_feed_mockup.png" alt="Video Feed" />
+      </div>
+      <div class="mockup-tile">
+        <h3>Mentor Swipe</h3>
+        <p>Connect with people who’ve done what you want to do</p>
+        <img src="mentor_swipe_mockup.png" alt="Mentor Swipe" />
+      </div>
+      <div class="mockup-tile">
+        <h3>User Profile</h3>
+        <p>Track your journey, not your likes</p>
+        <img src="user_profile_mockup.png" alt="User Profile" />
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Why WIN?</h2>
+    <p style="max-width:700px; margin:auto; font-size:1.05rem;">
+      I built WIN because I spent years feeling lost. After being diagnosed with ADHD, I realized I didn’t lack motivation -- I lacked structure, mentorship, and consistency.
+      WIN is the platform I wish I had: a trusted space to grow, not scroll.
+    </p>
+  </section>
+
+  <section>
+    <h2>Request Access</h2>
+    <form action="https://formspree.io/f/xoqgqvbl" method="POST">
+      <input type="text" name="name" placeholder="Full Name" required />
+      <input type="email" name="_replyto" placeholder="Email Address" required />
+      <button type="submit">Join Waitlist</button>
+    </form>
+  </section>
+
+  <footer>
+    © 2025 WIN. Built for those who want more.<br/>
+    <p style="margin-top:1rem; font-size:0.85rem;">Built with vision. Backed by belief.</p>
+  </footer>
+</body>
+</html>

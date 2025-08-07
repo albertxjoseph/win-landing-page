@@ -47,6 +47,29 @@
       height: 200px;
     }
 
+    /* Mobile centering fix for W animation */
+    @media (max-width: 768px) {
+      .animation-container {
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        margin: 0;
+      }
+      
+      .w-animation {
+        width: 150px;
+        height: 150px;
+        margin: 0 auto;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .w-animation {
+        width: 120px;
+        height: 120px;
+      }
+    }
+
     .w-path {
       stroke-dasharray: 300;
       stroke-dashoffset: 300;

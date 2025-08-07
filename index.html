@@ -377,6 +377,12 @@
     </div>
   </div>
 
+  <!-- High-tech sound effect -->
+  <audio id="powerUpSound" preload="auto">
+    <source src="https://www.soundjay.com/misc/sounds/tech-power-up-1.mp3" type="audio/mpeg">
+    <source src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3" type="audio/mpeg">
+  </audio>
+
   <div class="container">
     <header>
       <h1>The WIN List</h1>
@@ -438,6 +444,17 @@
 
   <script>
     // Animation sequence
+    document.addEventListener('DOMContentLoaded', function() {
+      // Play high-tech sound when W animation starts
+      const powerUpSound = document.getElementById('powerUpSound');
+      powerUpSound.volume = 0.3; // Set volume to 30%
+      
+      // Play sound immediately when page loads
+      powerUpSound.play().catch(function(error) {
+        console.log('Audio play failed:', error);
+      });
+    });
+
     setTimeout(() => {
       const animationContainer = document.getElementById('animationContainer');
       animationContainer.classList.add('fade-out');

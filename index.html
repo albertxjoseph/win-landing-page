@@ -6,144 +6,422 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>WIN - Motivation App</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
+    * {
       margin: 0;
-      background: #fff;
-      color: #000;
-      line-height: 1.6;
+      padding: 0;
+      box-sizing: border-box;
     }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0a0a0a;
+      color: #ffffff;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Entrance Animation */
+    .animation-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1000;
+      background: #0a0a0a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 1;
+      transition: opacity 0.8s ease-out;
+    }
+
+    .animation-container.fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .w-animation {
+      position: relative;
+      width: 200px;
+      height: 200px;
+    }
+
+    .w-path {
+      stroke-dasharray: 300;
+      stroke-dashoffset: 300;
+      animation: drawW 2s ease-out forwards;
+    }
+
+    @keyframes drawLine {
+      0% {
+        width: 0;
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        width: 60px;
+        opacity: 0.3;
+      }
+    }
+
+    @keyframes drawW {
+      0% {
+        stroke-dashoffset: 300;
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        stroke-dashoffset: 0;
+        opacity: 0.3;
+      }
+    }
+
+
+
+    /* Main Content */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
     header {
       text-align: center;
-      padding: 3rem 1rem 2rem;
+      padding: 8rem 0 4rem;
+      opacity: 0;
+      animation: fadeInUp 1s ease-out 3s forwards;
     }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
     header h1 {
-      font-size: 3rem;
-      margin-bottom: 1rem;
+      font-size: 4.5rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.02em;
+      position: relative;
     }
-    header p {
-      font-size: 1.25rem;
-      max-width: 700px;
-      margin: auto;
-      margin-bottom: 1rem;
+
+    header h1::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      z-index: -1;
     }
-    ul.features {
-      list-style: none;
-      padding: 0;
+
+
+
+    header .tagline {
+      font-size: 1.5rem;
+      font-weight: 300;
+      margin-bottom: 3rem;
+      opacity: 0.9;
+    }
+
+    .features {
       display: flex;
       justify-content: center;
-      gap: 1.5rem;
+      gap: 3rem;
       flex-wrap: wrap;
-      color: #555;
-      font-size: 0.95rem;
+      font-size: 1.1rem;
+      opacity: 0;
+      animation: fadeInUp 1s ease-out 3.5s forwards;
     }
+
+    .feature {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      opacity: 0.8;
+    }
+
+    .feature .checkmark {
+      color: #ffffff;
+      font-weight: bold;
+    }
+
     section {
-      padding: 2rem 1rem;
-      text-align: center;
+      padding: 6rem 0;
+      opacity: 0;
+      animation: fadeInUp 1s ease-out 4s forwards;
     }
+
+    section h2 {
+      font-size: 2.5rem;
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 4rem;
+      letter-spacing: -0.01em;
+    }
+
     .mockups {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 2rem;
-      max-width: 1000px;
-      margin: auto;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3rem;
+      margin-bottom: 2rem;
     }
+
     .mockup-tile {
-      background: #f2f2f2;
-      padding: 1rem;
-      border-radius: 0.75rem;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+      text-align: center;
+      padding: 2rem;
+      border-radius: 1rem;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: transform 0.3s ease, border-color 0.3s ease;
     }
+
+    .mockup-tile:hover {
+      transform: translateY(-5px);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .mockup-tile h3 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .mockup-tile p {
+      font-size: 1rem;
+      opacity: 0.7;
+      margin-bottom: 2rem;
+      line-height: 1.5;
+    }
+
     .mockup-tile img {
       width: 100%;
+      max-width: 280px;
       height: auto;
-      border-radius: 0.5rem;
-    }
-    form {
-      background: #f7f7f7;
-      max-width: 400px;
-      margin: 2rem auto;
-      padding: 1.5rem;
-      border-radius: 0.75rem;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    }
-    form input {
-      width: 100%;
-      padding: 0.75rem;
+      border-radius: 1rem;
       margin-bottom: 1rem;
-      border-radius: 0.5rem;
-      border: 1px solid #ccc;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     }
+
+    .mockup-tile .caption {
+      font-size: 0.9rem;
+      opacity: 0.6;
+      font-weight: 500;
+    }
+
+    /* Form Section */
+    .form-section {
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 1rem;
+      padding: 4rem 2rem;
+      margin: 4rem 0;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .form-section h2 {
+      margin-bottom: 3rem;
+    }
+
+    form {
+      max-width: 600px;
+      margin: 0 auto;
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    form input,
+    form textarea {
+      width: 100%;
+      padding: 1rem 1.5rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 0.75rem;
+      color: #ffffff;
+      font-size: 1rem;
+      transition: border-color 0.3s ease, background 0.3s ease;
+    }
+
+    form input::placeholder,
+    form textarea::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    form input:focus,
+    form textarea:focus {
+      outline: none;
+      border-color: rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    form textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
     form button {
       width: 100%;
-      padding: 0.75rem;
-      background: black;
-      color: white;
-      font-weight: bold;
+      padding: 1rem 2rem;
+      background: #ffffff;
+      color: #0a0a0a;
+      font-weight: 600;
+      font-size: 1.1rem;
       border: none;
-      border-radius: 0.5rem;
+      border-radius: 0.75rem;
       cursor: pointer;
+      transition: transform 0.2s ease, background 0.2s ease;
     }
+
+    form button:hover {
+      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.9);
+    }
+
     footer {
       text-align: center;
-      font-size: 0.85rem;
-      color: #888;
-      padding: 2rem 1rem;
+      padding: 4rem 0 2rem;
+      opacity: 0.6;
+      font-size: 0.9rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 1rem;
+      }
+
+      header {
+        padding: 6rem 0 3rem;
+      }
+
+      header h1 {
+        font-size: 3rem;
+      }
+
+      header .tagline {
+        font-size: 1.25rem;
+      }
+
+      .features {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+      }
+
+      .mockups {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      section {
+        padding: 4rem 0;
+      }
+
+      section h2 {
+        font-size: 2rem;
+      }
+
+      .form-section {
+        padding: 3rem 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header h1 {
+        font-size: 2.5rem;
+      }
+
+      .mockup-tile {
+        padding: 1.5rem;
+      }
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>WIN</h1>
-    <p>Not everyone gets in. But those who do, go further.</p>
-    <ul class="features">
-      <li>✓ Daily motivational videos</li>
-      <li>✓ Swipe to match with mentors</li>
-      <li>✓ Referral-only access</li>
-    </ul>
-  </header>
-
-  <section>
-    <h2>What the App Looks Like</h2>
-    <div class="mockups">
-      <div class="mockup-tile">
-        <h3>Video Feed</h3>
-        <p>Motivation personalized to your goals</p>
-        <img src="images/video_feed_mockup.png" alt="Video Feed" />
-      </div>
-      <div class="mockup-tile">
-        <h3>Mentor Swipe</h3>
-        <p>Connect with people who’ve done what you want to do</p>
-        <img src="images/mentor_swipe_mockup.png" alt="Mentor Swipe" />
-      </div>
-      <div class="mockup-tile">
-        <h3>User Profile</h3>
-        <p>Track your journey, not your likes</p>
-        <img src="images/user_profile_mockup.png" alt="User Profile" />
-      </div>
+  <!-- Entrance Animation -->
+  <div class="animation-container" id="animationContainer">
+    <div class="w-animation" id="wAnimation">
+      <svg width="200" height="200" viewBox="0 0 200 200">
+        <path class="w-path" d="M20 40 L40 120 L60 60 L80 120 L100 40" stroke="#ffffff" stroke-width="4" fill="none" stroke-linecap="round"/>
+      </svg>
     </div>
-  </section>
+  </div>
 
-  <section>
-    <h2>Why WIN?</h2>
-    <p style="max-width:700px; margin:auto; font-size:1.05rem;">
-      I built WIN because I spent years feeling lost. After being diagnosed with ADHD, I realized I didn’t lack motivation -- I lacked structure, mentorship, and consistency.
-      WIN is the platform I wish I had: a trusted space to grow, not scroll.
-    </p>
-  </section>
+  <div class="container">
+    <header>
+      <h1>The WIN List</h1>
+      <p class="tagline">Not everyone gets in. But those who do, go further.</p>
+      <div class="features">
+        <div class="feature">
+          <span class="checkmark">✓</span>
+          <span>Daily motivational videos</span>
+        </div>
+        <div class="feature">
+          <span class="checkmark">✓</span>
+          <span>Swipe to match with mentors</span>
+        </div>
+        <div class="feature">
+          <span class="checkmark">✓</span>
+          <span>Referral-only access</span>
+        </div>
+      </div>
+    </header>
 
-<section>
-  <h2>Request Access</h2>
-  <form action="https://formspree.io/f/xanbpqvp" method="POST">
-    <input type="text" name="name" placeholder="Full Name" required />
-    <input type="email" name="_replyto" placeholder="Email Address" required />
-    <button type="submit">Join Waitlist</button>
-  </form>
-</section>
+    <section>
+      <h2>What the App Looks Like</h2>
+      <div class="mockups">
+        <div class="mockup-tile">
+          <h3>Video Feed</h3>
+          <p>Motivation personalized to your goals</p>
+          <img src="images/video_feed_mockup.png" alt="Video Feed" />
+          <div class="caption">Video Feed</div>
+        </div>
+        <div class="mockup-tile">
+          <h3>Mentor Swipe</h3>
+          <p>Connect with people who've done what you want to do</p>
+          <img src="images/mentor_swipe_mockup.png" alt="Mentor Swipe" />
+          <div class="caption">Mentor Swipe</div>
+        </div>
+        <div class="mockup-tile">
+          <h3>User Profile</h3>
+          <p>Track your journey, not your likes</p>
+          <img src="images/user_profile_mockup.png" alt="User Profile" />
+          <div class="caption">User Profile</div>
+        </div>
+      </div>
+    </section>
 
-  <footer>
-    © 2025 WIN. Built for those who want more.<br/>
-    <p style="margin-top:1rem; font-size:0.85rem;">Built with vision. Backed by belief.</p>
-  </footer>
+    <section class="form-section">
+      <h2>Request Access</h2>
+      <form action="https://formspree.io/f/xanbpqvp" method="POST">
+        <input type="text" name="name" placeholder="Full Name" required />
+        <input type="email" name="_replyto" placeholder="Email Address" required />
+        <input type="text" name="phone" placeholder="Phone Number" required />
+        <input type="text" name="linkedin" placeholder="LinkedIn URL" required />
+        <textarea name="reason" placeholder="Why do you want to join The WIN List?" required></textarea>
+        <button type="submit">Join Waitlist</button>
+      </form>
+    </section>
+
+    <footer>
+      © 2025 WIN. Built for those who want more.<br/>
+      <p style="margin-top:1rem; font-size:0.85rem;">Built with vision. Backed by belief.</p>
+    </footer>
+  </div>
+
+  <script>
+    // Animation sequence
+    setTimeout(() => {
+      const animationContainer = document.getElementById('animationContainer');
+      animationContainer.classList.add('fade-out');
+    }, 3000); // Fade out after W is drawn
+  </script>
 </body>
 </html>

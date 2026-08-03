@@ -1,468 +1,564 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>WIN - Motivation App</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>WINLIST — A private network for people who build</title>
+<meta name="description" content="WINLIST is an invite-only social and professional network. Meet builders, mentors and visionaries near you — matched by intent, not by follower count. Join the interest list.">
+<meta name="theme-color" content="#09090A">
+<link rel="icon" href="assets/mark.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/mark.svg">
+<link rel="canonical" href="https://thewinlist.app/">
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #0a0a0a;
-      color: #ffffff;
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://thewinlist.app/">
+<meta property="og:title" content="WINLIST — A private network for people who build">
+<meta property="og:description" content="An invite-only social and professional network. Meet builders, mentors and visionaries near you — matched by intent, not by follower count.">
+<meta property="og:image" content="https://thewinlist.app/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="WINLIST — a private network for people who build.">
+<meta property="og:site_name" content="WINLIST">
+<meta name="twitter:card" content="summary_large_image">
 
-    /* Entrance Animation */
-    .animation-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 1000;
-      background: #0a0a0a;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 1;
-      transition: opacity 0.8s ease-out;
-    }
-
-    .animation-container.fade-out {
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    .w-animation {
-      position: relative;
-      width: 200px;
-      height: 200px;
-    }
-
-    /* Mobile centering fix for W animation */
-    @media (max-width: 768px) {
-      .animation-container {
-        align-items: center;
-        justify-content: center;
-        padding: 0;
-        margin: 0;
-      }
-      
-      .w-animation {
-        width: 150px;
-        height: 150px;
-        margin: 0 auto;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .w-animation {
-        width: 120px;
-        height: 120px;
-      }
-    }
-
-    .w-path {
-      stroke-dasharray: 300;
-      stroke-dashoffset: 300;
-      animation: drawW 2s ease-out forwards;
-    }
-
-    @keyframes drawLine {
-      0% {
-        width: 0;
-        opacity: 0;
-      }
-      50% {
-        opacity: 1;
-      }
-      100% {
-        width: 60px;
-        opacity: 0.3;
-      }
-    }
-
-    @keyframes drawW {
-      0% {
-        stroke-dashoffset: 300;
-        opacity: 0;
-      }
-      50% {
-        opacity: 1;
-      }
-      100% {
-        stroke-dashoffset: 0;
-        opacity: 1;
-      }
-    }
-
-
-
-    /* Main Content */
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 2rem;
-    }
-
-    header {
-      text-align: center;
-      padding: 8rem 0 4rem;
-      opacity: 0;
-      animation: fadeInUp 1s ease-out 3s forwards;
-    }
-
-    @keyframes fadeInUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    header h1 {
-      font-size: 6rem;
-      font-weight: 300;
-      margin-bottom: 2.5rem;
-      letter-spacing: normal;
-      position: relative;
-      font-family: 'Helvetica Neue', 'Arial', sans-serif;
-      color: #ffffff;
-      text-rendering: optimizeLegibility;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    header h1::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: transparent;
-      z-index: -1;
-    }
-
-
-
-    header .tagline {
-      font-size: 1.5rem;
-      font-weight: 300;
-      margin-bottom: 3rem;
-      opacity: 0.9;
-    }
-
-    .features {
-      display: flex;
-      justify-content: center;
-      gap: 3rem;
-      flex-wrap: wrap;
-      font-size: 1.1rem;
-      opacity: 0;
-      animation: fadeInUp 1s ease-out 3.5s forwards;
-    }
-
-    .feature {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      opacity: 0.8;
-    }
-
-    .feature .checkmark {
-      color: #ffffff;
-      font-weight: bold;
-    }
-
-    section {
-      padding: 6rem 0;
-      opacity: 0;
-      animation: fadeInUp 1s ease-out 4s forwards;
-    }
-
-    section h2 {
-      font-size: 2.5rem;
-      font-weight: 600;
-      text-align: center;
-      margin-bottom: 4rem;
-      letter-spacing: -0.01em;
-    }
-
-    .mockups {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 3rem;
-      margin-bottom: 2rem;
-    }
-
-    .mockup-tile {
-      text-align: center;
-      padding: 2rem;
-      border-radius: 1rem;
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      transition: transform 0.3s ease, border-color 0.3s ease;
-    }
-
-    .mockup-tile:hover {
-      transform: translateY(-5px);
-      border-color: rgba(255, 255, 255, 0.2);
-    }
-
-    .mockup-tile h3 {
-      font-size: 1.5rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-    }
-
-    .mockup-tile p {
-      font-size: 1rem;
-      opacity: 0.7;
-      margin-bottom: 2rem;
-      line-height: 1.5;
-    }
-
-    .mockup-tile img {
-      width: 100%;
-      max-width: 280px;
-      height: auto;
-      border-radius: 1rem;
-      margin-bottom: 1rem;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    }
-
-    .mockup-tile .caption {
-      font-size: 0.9rem;
-      opacity: 0.6;
-      font-weight: 500;
-    }
-
-    /* Form Section */
-    .form-section {
-      background: rgba(255, 255, 255, 0.02);
-      border-radius: 1rem;
-      padding: 4rem 2rem;
-      margin: 4rem 0;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .form-section h2 {
-      margin-bottom: 3rem;
-    }
-
-    form {
-      max-width: 600px;
-      margin: 0 auto;
-      display: grid;
-      gap: 1.5rem;
-    }
-
-    form input,
-    form textarea {
-      width: 100%;
-      padding: 1rem 1.5rem;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 0.75rem;
-      color: #ffffff;
-      font-size: 1rem;
-      transition: border-color 0.3s ease, background 0.3s ease;
-    }
-
-    form input::placeholder,
-    form textarea::placeholder {
-      color: rgba(255, 255, 255, 0.5);
-    }
-
-    form input:focus,
-    form textarea:focus {
-      outline: none;
-      border-color: rgba(255, 255, 255, 0.3);
-      background: rgba(255, 255, 255, 0.08);
-    }
-
-    form textarea {
-      min-height: 120px;
-      resize: vertical;
-    }
-
-    form button {
-      width: 100%;
-      padding: 1rem 2rem;
-      background: #ffffff;
-      color: #0a0a0a;
-      font-weight: 600;
-      font-size: 1.1rem;
-      border: none;
-      border-radius: 0.75rem;
-      cursor: pointer;
-      transition: transform 0.2s ease, background 0.2s ease;
-    }
-
-    form button:hover {
-      transform: translateY(-2px);
-      background: rgba(255, 255, 255, 0.9);
-    }
-
-    footer {
-      text-align: center;
-      padding: 4rem 0 2rem;
-      opacity: 0.6;
-      font-size: 0.9rem;
-    }
-
-    /* Responsive Design */
-    @media (max-width: 768px) {
-      .container {
-        padding: 0 1rem;
-      }
-
-      header {
-        padding: 6rem 0 3rem;
-      }
-
-      header h1 {
-        font-size: 3rem;
-      }
-
-      header .tagline {
-        font-size: 1.25rem;
-      }
-
-      .features {
-        flex-direction: column;
-        gap: 1rem;
-        align-items: center;
-      }
-
-      .mockups {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-      }
-
-      section {
-        padding: 4rem 0;
-      }
-
-      section h2 {
-        font-size: 2rem;
-      }
-
-      .form-section {
-        padding: 3rem 1rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      header h1 {
-        font-size: 2.5rem;
-      }
-
-      .mockup-tile {
-        padding: 1.5rem;
-      }
-    }
-  </style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,600;0,700;1,700&family=Raleway:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="styles.css">
+<!-- Only hide reveal targets when JS is actually running, so a blocked or slow
+     script can never leave the page blank. -->
+<script>document.documentElement.className += ' js';</script>
 </head>
 <body>
-  <!-- Entrance Animation -->
-  <div class="animation-container" id="animationContainer">
-    <div class="w-animation" id="wAnimation">
-      <svg width="200" height="200" viewBox="0 0 200 200">
-        <path class="w-path" d="M20 40 L40 120 L60 60 L80 120 L100 40" stroke="#ffffff" stroke-width="4" fill="none" stroke-linecap="round"/>
-      </svg>
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<!-- ═════════════════  HEADER  ═════════════════ -->
+<header class="site-header" id="siteHeader">
+  <div class="wrap header-inner">
+    <a class="brand" href="#top" aria-label="WINLIST home">
+      <img src="assets/wordmark.svg" alt="WINLIST" width="128" height="23" class="brand-word">
+    </a>
+
+    <nav class="site-nav" aria-label="Primary">
+      <a href="#concept">The idea</a>
+      <a href="#inside">Inside the app</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+
+    <a class="btn btn-gold btn-sm header-cta" href="#join">Request access</a>
+  </div>
+</header>
+
+<main id="main">
+<span id="top"></span>
+
+<!-- ═════════════════  HERO  ═════════════════ -->
+<section class="hero">
+  <div class="hero-glow" aria-hidden="true"></div>
+  <div class="wrap hero-grid">
+
+    <div class="hero-copy reveal">
+      <p class="eyebrow"><span class="dot" aria-hidden="true"></span>Private · Invite-only · Launching 2026</p>
+
+      <h1 class="hero-title">
+        Your network<br>
+        shouldn't be a<br>
+        <em>numbers game.</em>
+      </h1>
+
+      <p class="hero-sub">
+        WINLIST is a private social and professional network built on one idea: the right
+        hundred people beat a hundred thousand followers. No vanity metrics, no cold
+        outreach — just builders, mentors and visionaries near you, matched by what
+        you're actually working on.
+      </p>
+
+      <div class="hero-actions">
+        <a class="btn btn-gold" href="#join">Get on the interest list</a>
+        <a class="btn btn-ghost" href="#concept">See how it works</a>
+      </div>
+
+      <ul class="hero-points">
+        <li><svg class="ico" viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7.2"/><circle cx="10" cy="10" r="3.4"/></svg><span>Swipe to connect with people in your field, within 50 miles</span></li>
+        <li><svg class="ico" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3.4 16.6 6.8v5.1c0 3.4-2.7 5.7-6.6 6.7-3.9-1-6.6-3.3-6.6-6.7V6.8z"/><path d="m7.7 10.2 1.8 1.8 3-3.2"/></svg><span>Book real sessions with vetted mentors — in-app, no cold DMs</span></li>
+        <li><svg class="ico" viewBox="0 0 20 20" aria-hidden="true"><circle cx="7.6" cy="7.8" r="2.5"/><path d="M3 15.9c0-2.4 2-3.9 4.6-3.9s4.6 1.5 4.6 3.9"/><circle cx="14.2" cy="8.6" r="1.9"/><path d="M13.4 12.7c2.2 0 3.8 1.3 3.8 3.4"/></svg><span>Communities that meet up in person, not just in a group chat</span></li>
+      </ul>
+    </div>
+
+    <div class="hero-device reveal" data-delay="1">
+      <div class="phone phone-hero" role="img" aria-label="The WINLIST Connect screen: a member card for Sarah Chen, Product Designer in San Francisco, showing skill tags, follower count and a connect action.">
+        <div class="phone-screen dark">
+          <div class="app-header">
+            <img src="assets/wordmark.svg" alt="" width="84" height="15">
+            <div class="app-header-actions">
+              <span class="circ-btn outline"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4.2 8.6A6.1 6.1 0 1 1 5.4 13"/><path d="M3.6 4.8v3.9h3.9"/></svg></span>
+              <span class="circ-btn filled"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="6.8"/><circle cx="10" cy="10" r="3.2"/></svg><i class="count">8</i></span>
+            </div>
+          </div>
+
+          <div class="app-video">
+            <div class="seg"><i class="on"></i><i></i><i></i></div>
+            <span class="tag-video"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6.6 4.6 15 10l-8.4 5.4z"/></svg>VIDEO</span>
+            <div class="av-figure" aria-hidden="true"><span>SC</span></div>
+            <div class="app-video-meta">
+              <p class="av-name">Sarah Chen</p>
+              <p class="av-role">Product Designer · San Francisco</p>
+            </div>
+          </div>
+
+          <div class="app-info">
+            <div class="app-info-row">
+              <span class="gem gem-emerald" aria-hidden="true">W</span>
+              <span class="followers"><b>1,240</b> followers</span>
+              <span class="pill-outline">FOLLOW</span>
+            </div>
+            <div class="chips">
+              <span class="chip-o">UI/UX</span><span class="chip-o">BRANDING</span><span class="chip-o">FIGMA</span>
+            </div>
+            <p class="app-bio">Building thoughtful product experiences for early-stage startups. Previously @Stripe.</p>
+          </div>
+
+          <div class="app-nav">
+            <span class="nav-i active"><svg viewBox="0 0 22 22" aria-hidden="true"><circle cx="11" cy="11" r="7.2"/><circle cx="11" cy="11" r="3.4"/></svg></span>
+            <span class="nav-i"><svg viewBox="0 0 22 22" aria-hidden="true"><path d="M8.2 6.4 16 11l-7.8 4.6z"/></svg></span>
+            <span class="nav-i"><svg viewBox="0 0 22 22" aria-hidden="true"><rect x="3.6" y="5.8" width="14.8" height="10.4" rx="2"/><path d="m4 6.8 7 4.9 7-4.9"/></svg></span>
+            <span class="nav-i"><svg viewBox="0 0 22 22" aria-hidden="true"><circle cx="8.6" cy="8.4" r="2.6"/><path d="M3.8 16.4c0-2.4 2.1-3.8 4.8-3.8s4.8 1.4 4.8 3.8"/><circle cx="15.4" cy="9.2" r="1.9"/><path d="M14.7 13c2.1 0 3.8 1.3 3.8 3.4"/></svg></span>
+            <span class="nav-i"><svg viewBox="0 0 22 22" aria-hidden="true"><circle cx="11" cy="11" r="7.4"/><circle cx="11" cy="9.2" r="2.5"/><path d="M6.3 17c.7-2.2 2.5-3.3 4.7-3.3s4 1.1 4.7 3.3"/></svg></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═════════════════  CONCEPT  ═════════════════ -->
+<section class="section" id="concept">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">The idea</p>
+      <h2 class="sec-title">Everyone is connected.<br>Almost nobody is <em>introduced.</em></h2>
+      <p class="sec-lede">
+        Social apps optimise for reach. Professional apps optimise for résumés. Neither one
+        gets you into a room with the person who could change your next twelve months.
+        WINLIST is built for that introduction, and nothing else.
+      </p>
+    </div>
+
+    <div class="cards-3">
+      <article class="card reveal">
+        <span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.2"/><circle cx="12" cy="12" r="3.9"/></svg></span>
+        <h3>Matched by intent, not by algorithm</h3>
+        <p>You see people who share your field and are within about 50 miles of you. Swipe right to connect, left to pass. No filters to game, no follower counts to chase, no feed deciding who deserves your attention.</p>
+      </article>
+
+      <article class="card reveal" data-delay="1">
+        <span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3.2 19.4 7v6c0 4-3.1 6.7-7.4 7.8C7.7 19.7 4.6 17 4.6 13V7z"/><path d="m9.2 12.2 2 2 3.6-3.9"/></svg></span>
+        <h3>Mentors you can actually book</h3>
+        <p>Mentors and visionaries apply separately and carry a verified seal. Each one sets a flat session rate on their profile, and calls happen inside the app. You know the price before you ask, and they know you're serious.</p>
+      </article>
+
+      <article class="card reveal" data-delay="2">
+        <span class="card-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="9" cy="9.2" r="3"/><path d="M3.6 18.4c0-2.9 2.4-4.6 5.4-4.6s5.4 1.7 5.4 4.6"/><circle cx="16.8" cy="10.2" r="2.3"/><path d="M15.8 15c2.6 0 4.6 1.5 4.6 4.1"/></svg></span>
+        <h3>Communities that leave the group chat</h3>
+        <p>Join communities around what you're building. Members vote on a day, a time and a venue, and the meetup gets pinned. WINLIST curates events near you too. The point is to end up in the same room.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════  HOW IT WORKS  ═════════════════ -->
+<section class="section section-alt" id="how">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">How it works</p>
+      <h2 class="sec-title">Four steps.<br>No cold outreach.</h2>
+    </div>
+
+    <ol class="steps">
+      <li class="step-item reveal">
+        <span class="step-n">01</span>
+        <h3>Apply, don't sign up</h3>
+        <p>Everyone comes in through an application — as a Builder or as a Mentor. That's what keeps the room worth being in.</p>
+      </li>
+      <li class="step-item reveal" data-delay="1">
+        <span class="step-n">02</span>
+        <h3>Introduce yourself on video</h3>
+        <p>Your profile leads with a short video, not a headshot. People decide to connect with a person, not a job title.</p>
+      </li>
+      <li class="step-item reveal" data-delay="2">
+        <span class="step-n">03</span>
+        <h3>Connect, then talk</h3>
+        <p>Swipe through people in your field nearby. A mutual connect opens a real conversation — messages, calls, session bookings.</p>
+      </li>
+      <li class="step-item reveal" data-delay="3">
+        <span class="step-n">04</span>
+        <h3>Show up in person</h3>
+        <p>Communities and curated local events turn a connection into a coffee, a collaboration, or a hire.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ═════════════════  ROLES  ═════════════════ -->
+<section class="section" id="roles">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">Two ways in</p>
+      <h2 class="sec-title">Which side of the table are you on?</h2>
+      <p class="sec-lede">Pick one and it carries straight into your application. You can change it later.</p>
+    </div>
+
+    <div class="roles">
+      <button type="button" class="role-card reveal" data-role="builder">
+        <span class="role-tag">Builder</span>
+        <h3>I'm building something.</h3>
+        <p>Founders, operators, engineers, designers, students, career-switchers. You want mentors who've done it, collaborators who match your pace, and rooms you can't get into yet.</p>
+        <span class="role-go">Apply as a Builder <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 6l4 4-4 4"/></svg></span>
+      </button>
+
+      <button type="button" class="role-card role-card-gold reveal" data-delay="1" data-role="mentor">
+        <span class="role-tag">Mentor · Visionary</span>
+        <h3>I've already done it.</h3>
+        <p>Founders with exits, senior operators, investors, specialists. You set your own session rate, choose your availability, and get matched with people worth your hour — not your inbox.</p>
+        <span class="role-go">Apply as a Mentor <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11M11 6l4 4-4 4"/></svg></span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════  INSIDE THE APP  ═════════════════ -->
+<section class="section section-alt" id="inside">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <p class="eyebrow">Inside the app</p>
+      <h2 class="sec-title">Designed like something you'd actually open.</h2>
+      <p class="sec-lede">Five tabs, no clutter. Here's where you'll spend your time.</p>
     </div>
   </div>
 
-  <!-- High-tech sound effect -->
-  <audio id="powerUpSound" preload="auto">
-    <source src="https://www.soundjay.com/misc/sounds/tech-power-up-1.mp3" type="audio/mpeg">
-    <source src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3" type="audio/mpeg">
-  </audio>
+  <div class="rail" role="region" aria-label="App screen previews" tabindex="0">
+    <div class="rail-track">
 
-  <div class="container">
-    <header>
-      <h1>The WIN List</h1>
-      <p class="tagline">Not everyone gets in. But those who do, go further.</p>
-      <div class="features">
-        <div class="feature">
-          <span class="checkmark">✓</span>
-          <span>Daily motivational videos</span>
+      <figure class="shot reveal">
+        <div class="phone" aria-hidden="true">
+          <div class="phone-screen dark">
+            <div class="app-header"><img src="assets/wordmark.svg" alt="" width="78" height="14">
+              <div class="app-header-actions"><span class="circ-btn outline"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4.2 8.6A6.1 6.1 0 1 1 5.4 13"/><path d="M3.6 4.8v3.9h3.9"/></svg></span><span class="circ-btn filled"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="6.8"/><circle cx="10" cy="10" r="3.2"/></svg><i class="count">3</i></span></div>
+            </div>
+            <div class="app-video">
+              <div class="seg"><i class="on"></i><i></i><i></i></div>
+              <span class="tag-video"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M6.6 4.6 15 10l-8.4 5.4z"/></svg>VIDEO</span>
+              <div class="av-figure alt" aria-hidden="true"><span>MO</span></div>
+              <div class="app-video-meta"><p class="av-name">Marcus Obi</p><p class="av-role">Founder · Austin</p></div>
+            </div>
+            <div class="app-info">
+              <div class="app-info-row"><span class="gem gem-gold" aria-hidden="true">W</span><span class="followers"><b>3,180</b> followers</span><span class="pill-outline">FOLLOW</span></div>
+              <div class="chips"><span class="chip-o">FINTECH</span><span class="chip-o">SEED</span><span class="chip-o">GTM</span></div>
+              <p class="app-bio">Second-time founder. Raised a $4M seed. Happy to talk pricing and first hires.</p>
+            </div>
+            <div class="swipe-hint"><span class="sh sh-pass">‹ PASS</span><span class="sh sh-conn">CONNECT ›</span></div>
+          </div>
         </div>
-        <div class="feature">
-          <span class="checkmark">✓</span>
-          <span>Swipe to match with mentors</span>
-        </div>
-        <div class="feature">
-          <span class="checkmark">✓</span>
-          <span>Referral-only access</span>
-        </div>
-      </div>
-    </header>
+        <figcaption><b>Connect</b>Swipe through people in your field nearby. Right to connect, left to pass.</figcaption>
+      </figure>
 
-    <section>
-      <h2>What the App Looks Like</h2>
-      <div class="mockups">
-        <div class="mockup-tile">
-          <h3>Video Feed</h3>
-          <p>Motivation personalized to your goals</p>
-          <img src="images/video_feed_mockup.png" alt="Video Feed" />
+      <figure class="shot reveal" data-delay="1">
+        <div class="phone" aria-hidden="true">
+          <div class="phone-screen cream">
+            <div class="c-head"><p class="c-title">Messages</p><span class="c-ico"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3.6 16.4h12.8M12.8 3.6l3.1 3.1-8 8-3.9.8.8-3.9z"/></svg></span></div>
+            <div class="c-tabs"><span class="on">Connections</span><span>Mentors</span></div>
+            <div class="c-search"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="9" cy="9" r="5.4"/><path d="m13.2 13.2 3.4 3.4"/></svg>Search messages</div>
+            <p class="c-label">New connections</p>
+            <div class="c-new"><span class="c-av ring">AK</span><span class="c-av ring">JL</span><span class="c-av ring">TR</span><span class="c-av ring">MO</span></div>
+            <div class="c-thread"><span class="c-av">AI</span><div class="c-body"><p class="c-name">Aisha <i class="seal" aria-hidden="true">W</i></p><p class="c-prev">You: Sounds great, let me know…</p></div><span class="c-time">2m</span></div>
+            <div class="c-thread"><span class="c-av">DV</span><div class="c-body"><p class="c-name">Devon <i class="seal" aria-hidden="true">W</i></p><p class="c-prev">Thanks for accepting the connect!</p></div><span class="c-unread" aria-hidden="true"></span></div>
+            <div class="c-thread"><span class="c-av">PR</span><div class="c-body"><p class="c-name">Priya</p><p class="c-prev">Would love to pick your brain on…</p></div><span class="c-time">3h</span></div>
+            <div class="c-fill"></div>
+            <div class="app-nav on-cream">
+              <span class="nav-i"><svg viewBox="0 0 22 22" aria-hidden="true"><circle cx="11" cy="11" r="7.2"/><circle cx="11" cy="11" r="3.4"/></svg></span>
+              <span class="nav-i"><svg viewBox="0 0 22 22" aria-hidden="true"><path d="M8.2 6.4 16 11l-7.8 4.6z"/></svg></span>
+              <span class="nav-i active"><svg viewBox="0 0 22 22" aria-hidden="true"><rect x="3.6" y="5.8" width="14.8" height="10.4" rx="2"/><path d="m4 6.8 7 4.9 7-4.9"/></svg></span>
+              <span class="nav-i"><svg viewBox="0 0 22 22" aria-hidden="true"><circle cx="8.6" cy="8.4" r="2.6"/><path d="M3.8 16.4c0-2.4 2.1-3.8 4.8-3.8s4.8 1.4 4.8 3.8"/><circle cx="15.4" cy="9.2" r="1.9"/><path d="M14.7 13c2.1 0 3.8 1.3 3.8 3.4"/></svg></span>
+              <span class="nav-i"><svg viewBox="0 0 22 22" aria-hidden="true"><circle cx="11" cy="11" r="7.4"/><circle cx="11" cy="9.2" r="2.5"/><path d="M6.3 17c.7-2.2 2.5-3.3 4.7-3.3s4 1.1 4.7 3.3"/></svg></span>
+            </div>
+          </div>
         </div>
-        <div class="mockup-tile">
-          <h3>Mentor Swipe</h3>
-          <p>Connect with people who've done what you want to do</p>
-          <img src="images/mentor_swipe_mockup.png" alt="Mentor Swipe" />
-        </div>
-        <div class="mockup-tile">
-          <h3>User Profile</h3>
-          <p>Track your journey, not your likes</p>
-          <img src="images/user_profile_mockup.png" alt="User Profile" />
-        </div>
-      </div>
-    </section>
+        <figcaption><b>Inbox</b>Only people you both agreed to meet. Mentor sessions get their own tab.</figcaption>
+      </figure>
 
-    <section class="form-section">
-      <h2>Request Access</h2>
-      <form action="https://formspree.io/f/xanbpqvp" method="POST">
-        <input type="text" name="name" placeholder="Full Name" required />
-        <input type="email" name="_replyto" placeholder="Email Address" required />
-        <input type="text" name="phone" placeholder="Phone Number" required />
-        <input type="text" name="linkedin" placeholder="LinkedIn URL" required />
-        <textarea name="reason" placeholder="Why do you want to join The WIN List?" required></textarea>
-        <button type="submit">Join Waitlist</button>
-      </form>
-    </section>
+      <figure class="shot reveal" data-delay="2">
+        <div class="phone" aria-hidden="true">
+          <div class="phone-screen cream">
+            <div class="c-head"><p class="c-title">Communities</p><span class="c-ico"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 4.4v11.2M4.4 10h11.2"/></svg></span></div>
+            <div class="ev-card">
+              <p class="ev-kicker">Planned · near you</p>
+              <p class="ev-title">Founders &amp; Coffee</p>
+              <p class="ev-meta">Sat 9:00 AM · Ritual, Mission St</p>
+              <span class="ev-pill">I'm going</span>
+            </div>
+            <p class="c-label">Your communities</p>
+            <div class="cm-row"><span class="cm-av">SF</span><div class="c-body"><p class="c-name">SF Product Builders</p><p class="c-prev">412 members · 2 new posts</p></div></div>
+            <div class="cm-row"><span class="cm-av alt">EA</span><div class="c-body"><p class="c-name">Early AI</p><p class="c-prev">Vote open: Thursday or Friday?</p></div><span class="vote-dot" aria-hidden="true"></span></div>
+            <div class="cm-row"><span class="cm-av alt2">DS</span><div class="c-body"><p class="c-name">Design Systems Club</p><p class="c-prev">Meetup confirmed · Tue 6:30</p></div></div>
+            <div class="c-fill"></div>
+            <div class="app-nav on-cream">
+              <span class="nav-i"><svg viewBox="0 0 22 22" aria-hidden="true"><circle cx="11" cy="11" r="7.2"/><circle cx="11" cy="11" r="3.4"/></svg></span>
+              <span class="nav-i"><svg viewBox="0 0 22 22" aria-hidden="true"><path d="M8.2 6.4 16 11l-7.8 4.6z"/></svg></span>
+              <span class="nav-i"><svg viewBox="0 0 22 22" aria-hidden="true"><rect x="3.6" y="5.8" width="14.8" height="10.4" rx="2"/><path d="m4 6.8 7 4.9 7-4.9"/></svg></span>
+              <span class="nav-i active"><svg viewBox="0 0 22 22" aria-hidden="true"><circle cx="8.6" cy="8.4" r="2.6"/><path d="M3.8 16.4c0-2.4 2.1-3.8 4.8-3.8s4.8 1.4 4.8 3.8"/><circle cx="15.4" cy="9.2" r="1.9"/><path d="M14.7 13c2.1 0 3.8 1.3 3.8 3.4"/></svg></span>
+              <span class="nav-i"><svg viewBox="0 0 22 22" aria-hidden="true"><circle cx="11" cy="11" r="7.4"/><circle cx="11" cy="9.2" r="2.5"/><path d="M6.3 17c.7-2.2 2.5-3.3 4.7-3.3s4 1.1 4.7 3.3"/></svg></span>
+            </div>
+          </div>
+        </div>
+        <figcaption><b>Communities</b>Members vote on day, time and venue. The meetup gets pinned.</figcaption>
+      </figure>
 
-    <footer>
-      © 2025 WIN. Built for those who want more.<br/>
-      <p style="margin-top:1rem; font-size:0.85rem;">Built with vision. Backed by belief.</p>
-    </footer>
+    </div>
   </div>
+  <p class="rail-hint" aria-hidden="true">Scroll sideways for more →</p>
+</section>
 
-  <script>
-    // Animation sequence
-    document.addEventListener('DOMContentLoaded', function() {
-      // Play high-tech sound when W animation starts
-      const powerUpSound = document.getElementById('powerUpSound');
-      powerUpSound.volume = 0.3; // Set volume to 30%
-      
-      // Play sound immediately when page loads
-      powerUpSound.play().catch(function(error) {
-        console.log('Audio play failed:', error);
-      });
-    });
+<!-- ═════════════════  FORM  ═════════════════ -->
+<section class="section" id="join">
+  <div class="wrap wrap-narrow">
+    <div class="sec-head reveal">
+      <p class="eyebrow">Interest list</p>
+      <h2 class="sec-title">Ask for your invite.</h2>
+      <p class="sec-lede">Four short steps, about a minute. We open cities by application — earlier answers get read first.</p>
+    </div>
 
-    setTimeout(() => {
-      const animationContainer = document.getElementById('animationContainer');
-      animationContainer.classList.add('fade-out');
-    }, 3000); // Fade out after W is drawn
-  </script>
+    <div class="form-shell reveal">
+      <div class="progress">
+        <div class="progress-head">
+          <p class="progress-step" id="progressLabel">Step 1 of 4 · Your role</p>
+          <p class="progress-pct" id="progressPct">25%</p>
+        </div>
+        <div class="progress-bar" role="progressbar" aria-valuemin="1" aria-valuemax="4" aria-valuenow="1" aria-label="Application progress" id="progressBar">
+          <span id="progressFill"></span>
+        </div>
+      </div>
+
+      <form id="joinForm" novalidate>
+        <div class="hp" aria-hidden="true"><label for="company">Company</label><input type="text" id="company" name="company" tabindex="-1" autocomplete="off"></div>
+
+        <!-- STEP 1 -->
+        <fieldset class="step" data-step="1">
+          <legend class="q">Which one are you?</legend>
+          <p class="q-help">This decides what your application asks next.</p>
+          <div class="opt-grid">
+            <label class="opt">
+              <input type="radio" name="role" value="builder">
+              <span class="opt-body">
+                <span class="opt-title">Builder</span>
+                <span class="opt-desc">I'm building, learning or switching lanes — and I want people who are ahead of me.</span>
+              </span>
+            </label>
+            <label class="opt">
+              <input type="radio" name="role" value="mentor">
+              <span class="opt-body">
+                <span class="opt-title">Mentor · Visionary</span>
+                <span class="opt-desc">I've done it already and I'm open to guiding people, on my own terms.</span>
+              </span>
+            </label>
+          </div>
+          <p class="err" id="roleErr" role="alert"></p>
+        </fieldset>
+
+        <!-- STEP 2 -->
+        <fieldset class="step" data-step="2" hidden>
+          <legend class="q">How do we reach you?</legend>
+          <p class="q-help">Only used for your invite and launch updates. Never sold, never spammed.</p>
+
+          <div class="field">
+            <label for="fullName">Full name <span class="req" aria-hidden="true">*</span></label>
+            <input type="text" id="fullName" name="fullName" autocomplete="name" maxlength="80" placeholder="Jordan Rivera">
+            <p class="err" role="alert"></p>
+          </div>
+
+          <div class="field">
+            <label for="email">Email <span class="req" aria-hidden="true">*</span></label>
+            <input type="email" id="email" name="email" autocomplete="email" inputmode="email" maxlength="120" placeholder="you@company.com">
+            <p class="err" role="alert"></p>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="phone">Phone <span class="req" aria-hidden="true">*</span></label>
+              <input type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" maxlength="24" placeholder="(415) 555-0142">
+              <p class="hint">Invites go out by text first.</p>
+              <p class="err" role="alert"></p>
+            </div>
+            <div class="field">
+              <label for="city">City <span class="req" aria-hidden="true">*</span></label>
+              <input type="text" id="city" name="city" autocomplete="address-level2" maxlength="60" placeholder="San Francisco, CA">
+              <p class="hint">We open city by city.</p>
+              <p class="err" role="alert"></p>
+            </div>
+          </div>
+        </fieldset>
+
+        <!-- STEP 3 -->
+        <fieldset class="step" data-step="3" hidden>
+          <legend class="q">What do you do?</legend>
+          <p class="q-help">This is what we match on. Be specific — it helps more than a job title.</p>
+
+          <div class="field">
+            <label for="field">Your field <span class="req" aria-hidden="true">*</span></label>
+            <div class="select-wrap">
+              <select id="field" name="field">
+                <option value="" disabled selected>Choose one…</option>
+                <option>Tech &amp; Engineering</option>
+                <option>Design &amp; Creative</option>
+                <option>Business &amp; Operations</option>
+                <option>Finance &amp; Investing</option>
+                <option>Marketing &amp; Media</option>
+                <option>Health &amp; Science</option>
+                <option>Law &amp; Policy</option>
+                <option>Real Estate &amp; Trades</option>
+                <option>Arts &amp; Entertainment</option>
+                <option>Education</option>
+                <option>Student</option>
+                <option>Other</option>
+              </select>
+              <svg class="sel-caret" viewBox="0 0 20 20" aria-hidden="true"><path d="m5.5 8 4.5 4.5L14.5 8"/></svg>
+            </div>
+            <p class="err" role="alert"></p>
+          </div>
+
+          <div class="field">
+            <label for="focus" id="focusLabel">What are you working on right now? <span class="req" aria-hidden="true">*</span></label>
+            <textarea id="focus" name="focus" maxlength="300" rows="4" placeholder="One or two sentences is plenty."></textarea>
+            <p class="hint"><span id="focusCount">0</span>/300</p>
+            <p class="err" role="alert"></p>
+          </div>
+
+          <div class="field">
+            <label for="link">LinkedIn or website <span class="opt-lbl">(optional)</span></label>
+            <input type="url" id="link" name="link" autocomplete="url" inputmode="url" maxlength="200" placeholder="https://linkedin.com/in/…">
+            <p class="err" role="alert"></p>
+          </div>
+        </fieldset>
+
+        <!-- STEP 4 -->
+        <fieldset class="step" data-step="4" hidden>
+          <legend class="q">What do you want out of WINLIST?</legend>
+          <p class="q-help">Pick everything that applies — at least one.</p>
+
+          <div class="chip-set" id="goals">
+            <label class="chip"><input type="checkbox" name="goals" value="Find a mentor"><span>Find a mentor</span></label>
+            <label class="chip"><input type="checkbox" name="goals" value="Mentor others"><span>Mentor others</span></label>
+            <label class="chip"><input type="checkbox" name="goals" value="Meet collaborators"><span>Meet collaborators</span></label>
+            <label class="chip"><input type="checkbox" name="goals" value="Find a co-founder"><span>Find a co-founder</span></label>
+            <label class="chip"><input type="checkbox" name="goals" value="Hire talent"><span>Hire talent</span></label>
+            <label class="chip"><input type="checkbox" name="goals" value="Find work"><span>Find work</span></label>
+            <label class="chip"><input type="checkbox" name="goals" value="Raise or invest"><span>Raise or invest</span></label>
+            <label class="chip"><input type="checkbox" name="goals" value="Local events"><span>Local events</span></label>
+            <label class="chip"><input type="checkbox" name="goals" value="Learn a new field"><span>Learn a new field</span></label>
+          </div>
+          <p class="err" id="goalsErr" role="alert"></p>
+
+          <div class="field">
+            <label for="referral">How did you hear about us? <span class="opt-lbl">(optional)</span></label>
+            <div class="select-wrap">
+              <select id="referral" name="referral">
+                <option value="" selected>Prefer not to say</option>
+                <option>A friend or colleague</option>
+                <option>Met the team at an event</option>
+                <option>Instagram</option>
+                <option>LinkedIn</option>
+                <option>TikTok</option>
+                <option>X / Twitter</option>
+                <option>Search</option>
+                <option>Other</option>
+              </select>
+              <svg class="sel-caret" viewBox="0 0 20 20" aria-hidden="true"><path d="m5.5 8 4.5 4.5L14.5 8"/></svg>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="notes">Anything else we should know? <span class="opt-lbl">(optional)</span></label>
+            <textarea id="notes" name="notes" maxlength="400" rows="3" placeholder="Who you'd want to meet, what you'd bring to the room…"></textarea>
+          </div>
+
+          <label class="consent">
+            <input type="checkbox" name="consent" id="consent">
+            <span>It's okay to contact me by email and text about my invite and the WINLIST launch. <span class="req" aria-hidden="true">*</span></span>
+          </label>
+          <p class="err" id="consentErr" role="alert"></p>
+        </fieldset>
+
+        <div class="form-actions">
+          <button type="button" class="btn btn-ghost" id="backBtn" hidden>Back</button>
+          <button type="button" class="btn btn-gold" id="nextBtn">Continue</button>
+          <button type="submit" class="btn btn-gold" id="submitBtn" hidden>
+            <span class="btn-label">Send my application</span>
+            <span class="spinner" aria-hidden="true"></span>
+          </button>
+        </div>
+        <p class="form-foot">Takes about a minute. We'll only ever contact you about WINLIST.</p>
+        <p class="err form-err" id="formErr" role="alert"></p>
+      </form>
+
+      <div class="done" id="done" role="status" aria-live="polite" hidden>
+        <span class="done-mark" aria-hidden="true"><svg viewBox="0 0 44 44"><path d="M13 22.5 19.5 29 32 16"/></svg></span>
+        <h3>You're on the list.</h3>
+        <p id="doneMsg">We've got your application. Invites go out city by city — we'll text you the moment yours opens.</p>
+        <button type="button" class="btn btn-ghost" id="againBtn">Submit another person</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════════════  FAQ  ═════════════════ -->
+<section class="section section-alt" id="faq">
+  <div class="wrap wrap-narrow">
+    <div class="sec-head reveal">
+      <p class="eyebrow">Questions</p>
+      <h2 class="sec-title">Straight answers.</h2>
+    </div>
+
+    <div class="faq reveal">
+      <details>
+        <summary>Is WINLIST free?<span class="chev" aria-hidden="true"></span></summary>
+        <div class="faq-body"><p>Joining, building a profile, connecting and messaging are free. A premium tier unlocks extras such as seeing who wants to connect with you before you swipe. Mentor sessions are paid separately, at the flat rate each mentor sets on their own profile.</p></div>
+      </details>
+      <details>
+        <summary>Why is it invite-only?<span class="chev" aria-hidden="true"></span></summary>
+        <div class="faq-body"><p>Because the value of a network is the people in it. Every member — Builder or Mentor — comes through an application, so the person on the other side of a connect is someone who also chose to be here.</p></div>
+      </details>
+      <details>
+        <summary>How is this different from LinkedIn?<span class="chev" aria-hidden="true"></span></summary>
+        <div class="faq-body"><p>LinkedIn is a résumé you broadcast at strangers. WINLIST is a room you get introduced into. No cold outreach, no connection-count race, and no feed rewarding whoever posts most — just people near you, in your field, who agreed to meet.</p></div>
+      </details>
+      <details>
+        <summary>When does it launch?<span class="chev" aria-hidden="true"></span></summary>
+        <div class="faq-body"><p>The app is built and in testing now. We're opening one city at a time through 2026, starting where the interest list is densest — which is a real reason to add your city.</p></div>
+      </details>
+      <details>
+        <summary>What happens to my information?<span class="chev" aria-hidden="true"></span></summary>
+        <div class="faq-body"><p>It's stored privately and used only to process your invite and tell you when your city opens. We don't sell it, share it, or add you to anything you didn't ask for. Reply to any message from us and we'll delete it.</p></div>
+      </details>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ═════════════════  FOOTER  ═════════════════ -->
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <div class="footer-brand">
+      <img src="assets/wordmark.svg" alt="WINLIST" width="118" height="21">
+      <p class="footer-strap">Work · Inspire · Network</p>
+    </div>
+    <div class="footer-right">
+      <a class="btn btn-gold btn-sm" href="#join">Request access</a>
+      <p class="footer-legal">© <span id="year">2026</span> WINLIST. Built for people who are actually building.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
 </body>
 </html>

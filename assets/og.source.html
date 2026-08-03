@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,700;1,700&family=Raleway:wght@500;600;700&display=swap">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1200px;height:630px;overflow:hidden}
+  body{
+    background:#09090A;
+    font-family:"Raleway",sans-serif;
+    color:#E8D7C1;
+    position:relative;
+  }
+  .glow{
+    position:absolute;top:-260px;right:-120px;width:900px;height:900px;
+    background:radial-gradient(45% 45% at 50% 50%,rgba(241,161,13,.26),rgba(241,161,13,0) 70%);
+  }
+  .edge{position:absolute;left:0;top:0;bottom:0;width:8px;background:linear-gradient(180deg,#F1A10D,#B0820C)}
+  .inner{position:relative;height:100%;padding:76px 92px;display:flex;flex-direction:column;justify-content:space-between}
+  .wm{width:300px;height:auto}
+  h1{
+    font-family:"Playfair Display",Georgia,serif;
+    font-size:74px;line-height:1.06;letter-spacing:-.022em;
+    color:#FBF4EA;max-width:19ch;
+  }
+  h1 em{font-style:italic;color:#F1A10D}
+  .eyebrow{
+    font-family:"Bebas Neue",sans-serif;font-size:25px;letter-spacing:.2em;
+    color:#F1A10D;display:flex;align-items:center;gap:14px;margin-bottom:26px;
+  }
+  .eyebrow span{width:9px;height:9px;border-radius:50%;background:#F1A10D;box-shadow:0 0 0 6px rgba(241,161,13,.16)}
+  .foot{display:flex;align-items:flex-end;justify-content:space-between;gap:40px}
+  .sub{font-size:24px;font-weight:500;color:#9E968C;max-width:40ch;line-height:1.5}
+  .url{
+    font-family:"Bebas Neue",sans-serif;font-size:30px;letter-spacing:.14em;color:#E8D7C1;
+    border:1.5px solid rgba(232,215,193,.3);border-radius:999px;padding:12px 30px 9px;white-space:nowrap;
+  }
+</style>
+</head>
+<body>
+  <div class="glow"></div>
+  <div class="edge"></div>
+  <div class="inner">
+    <img class="wm" src="wordmark.svg" alt="">
+
+    <div>
+      <p class="eyebrow"><span></span>PRIVATE · INVITE-ONLY</p>
+      <h1>A private network for people who <em>build.</em></h1>
+    </div>
+
+    <div class="foot">
+      <p class="sub">Builders, mentors and visionaries near you — matched by intent, not by follower count.</p>
+      <p class="url">THEWINLIST.APP</p>
+    </div>
+  </div>
+</body>
+</html>

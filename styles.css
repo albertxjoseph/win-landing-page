@@ -690,13 +690,15 @@ button{font:inherit;color:inherit}
 }
 .chip span:hover{border-color:var(--line-strong)}
 .chip span::before{
+  /* right+bottom borders rotated +45° — puts the long arm on the upper right.
+     left+bottom at -45° draws a mirrored tick. */
   content:"";width:0;height:11px;margin-right:0;
-  border-left:2px solid currentColor;border-bottom:2px solid currentColor;
-  transform:rotate(-45deg) scale(0);
+  border-right:2px solid currentColor;border-bottom:2px solid currentColor;
+  transform:rotate(45deg) scale(0);
   transition:transform var(--t-fast) var(--ease-out),width var(--t-fast) var(--ease-out),margin var(--t-fast) var(--ease-out);
 }
 .chip input:checked+span{background:var(--gold);border-color:var(--gold);color:var(--text-onGold)}
-.chip input:checked+span::before{width:7px;margin-right:11px;transform:rotate(-45deg) scale(1)}
+.chip input:checked+span::before{width:6px;margin-right:12px;transform:rotate(45deg) scale(1)}
 .chip input:focus-visible+span{outline:2px solid var(--gold);outline-offset:3px}
 
 /* consent */

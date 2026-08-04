@@ -95,22 +95,22 @@
 
     if (id === 'fullName') {
       if (!v) return 'Enter your full name so we know who to invite.';
-      if (v.length < 2) return 'That looks too short — please enter your full name.';
+      if (v.length < 2) return 'That looks too short. Please enter your full name.';
       return '';
     }
     if (id === 'email') {
       if (!v) return 'We need an email to send your invite.';
-      if (!EMAIL_RE.test(v)) return 'That email looks incomplete. Check for a typo — e.g. name@company.com';
+      if (!EMAIL_RE.test(v)) return 'That email looks incomplete. Check for a typo, like name@company.com';
       return '';
     }
     if (id === 'phone') {
-      if (!v) return 'We text invites first, so we need a number.';
+      if (!v) return 'We send invites by text first, so we need a number.';
       var d = digits(v);
       if (d.length < 7 || d.length > 15) return 'Enter a full phone number, including area code.';
       return '';
     }
     if (id === 'city') {
-      if (!v) return 'Tell us your city — we open one city at a time.';
+      if (!v) return 'Tell us your city. We open one city at a time.';
       return '';
     }
     if (id === 'field') {
@@ -119,7 +119,7 @@
     }
     if (id === 'focus') {
       if (!v) return 'A sentence or two is all we need here.';
-      if (v.length < 12) return 'Add a little more — one full sentence helps us match you.';
+      if (v.length < 12) return 'Add a little more. One full sentence helps us match you.';
       return '';
     }
     if (id === 'link') {
@@ -236,7 +236,7 @@
     if (n === 4) {
       var goals = $$('input[name="goals"]:checked', form);
       if (!goals.length) {
-        setErr($('#goalsErr'), 'Pick at least one — this is how we match you.');
+        setErr($('#goalsErr'), 'Pick at least one. This is how we match you.');
         problems.push($$('input[name="goals"]', form)[0]);
       }
       if (!consentEl.checked) {
@@ -364,15 +364,15 @@
         if (r.ok) { succeed(payload, r.body); return; }
 
         if (r.status === 409) {
-          setErr(formErr, "You're already on the list with that email — we've got you.");
+          setErr(formErr, "You're already on the list with that email. We've got you.");
         } else if (r.status === 429) {
           setErr(formErr, 'Too many attempts from this device. Give it a minute and try again.');
         } else if (r.status === 400 && r.body && r.body.error) {
           setErr(formErr, r.body.error);
         } else if (r.status === 503) {
-          setErr(formErr, "The form isn't connected yet. Email us at support@thewinlist.app and we'll add you by hand.");
+          setErr(formErr, "The form isn't connected right now. Email us at support@thewinlist.app and we'll add you by hand.");
         } else {
-          setErr(formErr, "That didn't go through. Try again — if it keeps failing, email support@thewinlist.app.");
+          setErr(formErr, "That didn't go through. Try again, and if it keeps failing email us at support@thewinlist.app.");
         }
       })
       .catch(function (err) {
@@ -397,9 +397,9 @@
     var first = (payload.fullName || '').split(' ')[0];
     var lead = first ? first + ', you' : 'You';
     doneMsg.textContent = (body && body.duplicate)
-      ? lead + "'re already on the list — we've updated your answers. We'll text you when your city opens."
-      : lead + "'re on the list. Invites go out city by city — we'll text you the moment " +
-        (payload.city ? payload.city.split(',')[0] : 'your city') + ' opens.';
+      ? lead + "'re already on the list. We've updated your answers, and we'll text you when your city opens."
+      : lead + "'re on the list. We're opening city by city, and we'll text you as soon as " +
+        (payload.city ? payload.city.split(',')[0] : 'your city') + ' is up.';
 
     // doneBox is role="status" aria-live="polite", so it announces itself —
     // no focus grab needed, which keeps a ring off a non-interactive heading.

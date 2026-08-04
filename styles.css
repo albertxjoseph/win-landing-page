@@ -786,6 +786,27 @@ button{font:inherit;color:inherit}
 .faq-body{padding-bottom:var(--s5)}
 .faq-body p{color:var(--text-muted);font-size:15.5px;max-width:66ch;line-height:1.68}
 
+/* ── contact ─────────────────────────────────── */
+.contact-card{
+  background:linear-gradient(165deg,rgba(241,161,13,.10),rgba(241,161,13,.015) 62%),var(--surface);
+  border:1px solid rgba(241,161,13,.26);
+  border-radius:26px;
+  padding:clamp(28px,5vw,52px);
+  text-align:center;
+}
+.contact-card .eyebrow{justify-content:center}
+.contact-card .sec-lede{margin-inline:auto}
+.contact-btn{
+  margin-top:var(--s6);
+  font-size:16px;
+  word-break:break-all;
+}
+.contact-btn svg{
+  width:19px;height:19px;flex:none;
+  fill:none;stroke:currentColor;stroke-width:1.6;
+  stroke-linecap:round;stroke-linejoin:round;
+}
+
 /* ── footer ──────────────────────────────────── */
 .site-footer{border-top:1px solid var(--line);padding-block:var(--s7)}
 .footer-inner{display:flex;flex-wrap:wrap;gap:var(--s6);align-items:flex-end;justify-content:space-between}
@@ -798,6 +819,13 @@ button{font:inherit;color:inherit}
 .footer-right{display:flex;flex-direction:column;gap:var(--s4);align-items:flex-start}
 @media (min-width:720px){.footer-right{align-items:flex-end}}
 .footer-legal{font-size:13px;color:var(--text-muted)}
+.footer-mail{
+  font-size:14.5px;font-weight:600;color:var(--gold);
+  text-decoration:none;min-height:44px;display:inline-flex;align-items:center;
+  border-bottom:1px solid transparent;
+  transition:border-color var(--t-fast) var(--ease-out);
+}
+.footer-mail:hover{border-bottom-color:var(--gold)}
 
 /* ── reveal ──────────────────────────────────── */
 .js .reveal{opacity:0;transform:translateY(22px)}
